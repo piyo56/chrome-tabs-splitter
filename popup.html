@@ -2,16 +2,47 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-<style>
-body {
-    min-width: 100px;
-}
-</style>
+    <style>
+        body {
+            width: 150px;
+        }
+        #header p {
+            width: 80%;
+            height: 20%;
+            table-layout: fixed;
+            font-size: 18pt;
+            font-weight: bold;
+            padding: 5px 10px;
+            margin: 0 auto;
+            border: solid 1px;
+            text-align: center;
+        }
+        #container li {
+            margin: 5px auto;
+        }
+        #container button {
+            text-align: center;
+            font-size: 10pt;
+        }
+    </style>
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    -->
 </head>
 <body>
-    <table>
-        <tr><td><button>split</button></td></tr>
-        <tr><td><button>bookmark</button></td></tr>
-    </table>
+    <div id="header">
+        <p>tab_tmp</p>
+    </div>
+    <div id="container">
+        <ul>
+            <li>
+                <button id="split">split</button>
+            </li>
+            <li>
+                <button id="bookmark">bookmark</button>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="js/myscript.js"></script>
 </body>
 </html>

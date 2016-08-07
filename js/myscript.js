@@ -21,20 +21,5 @@ document.getElementById("split").onclick = function() {
         console.info("now: " + active_tabId);
         console.info("left: " + left_tabIds);
         console.info("right: " + right_tabIds);
-        openInNewWindow( right_tabIds );
     });
 };
-/*
-document.getElementById("bookmark").onclick = function() {
-    alert("bookmark");
-};
-*/
-
-function openInNewWindow( tabIds ) {
-    chrome.windows.create({"focused":true}, function() {
-        chrome.windows.getCurrent(function (current_window){
-            console.info(current_window);
-        });
-        //chrome.tabs.move(tabIds, {"index":chrome.windows.WINDOW_ID_CURRENT});
-    });
-}
