@@ -62,7 +62,22 @@ document.getElementById("split").onclick = function() {
 //  [TO DO]: storeしたタブが後々不要になった時に削除する機能
 //-------------------------------------------------------------
 document.getElementById("store").onclick = function() {
+    chrome.tabs.query({"currentWindow": true}, function(all_tabs) {
 
+        // get each url of tabs of current window
+        var urls_to_store = [];
+        for( var i=0; i<all_tabs.length; i++) {
+            urls_to_store.push(all_tabs[i].url);
+        }
+
+        // store them on WebStorage
+        localStorage.setItem(store_key, JSON.stringify(urls_to_store));
+
+        // remove current window
+        chrome.windows.getCurrent(function(window_info) {
+            chrome.windows.remove(window_info["id"]);
+        });
+    });
 };
 
 document.getElementById("retreve").onclick = function() {

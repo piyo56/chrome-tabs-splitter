@@ -5,10 +5,6 @@
     "version": "0.1",
     "description": "タブ操作をちょっと便利にしたいエクステンション！",
 
-    "background": {
-        "scripts": ["js/background.js"]
-    },
-
     "permissions": [
         "tabs", "http://*/*", "bookmarks"
     ],
