@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        html {
+        }
         body {
-            width: 150px;
+            width: 350px;
+            height: 150px;
         }
         #header p {
             width: 80%;
@@ -17,12 +20,35 @@
             border: solid 1px;
             text-align: center;
         }
-        #container li {
+        #container {
+            height: 80%;
+        }
+        #container > ul {
+            height: 40%;
+        }
+        #container > li {
             margin: 5px auto;
         }
         #container button {
             text-align: center;
-            font-size: 10pt;
+            margin: 5px auto;
+        }
+        .btn{
+            font-size: 11pt;
+        }
+        #bookmark_setting {
+            width: 90%;
+            height: 50%;
+            margin: 0 auto;
+            text-align:center;
+            display: none;
+            font-size: 11pt;
+            border: groove 1px;
+        }
+        #bookmark_setting > table {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
         }
     </style>
     <!--
@@ -36,13 +62,40 @@
     <div id="container">
         <ul>
             <li>
-                <button id="split">split</button>
+                <button class="btn" id="split">split</button>
+            </li>
+            <li id="li_store">
+                <button class="btn" id="store">store on this device</button>
+                <button class="btn" id="retreve">retreve</button>
             </li>
             <li>
-                <button id="bookmark">bookmark</button>
+                <button class="btn" id="bookmark">bookmark</button>
             </li>
         </ul>
+
+        <div id="bookmark_setting">
+        <p>Bookmark path</p>
+        <table>
+            <tr>
+                <td>
+                    <select name="bookmark_folder">
+                        <OPTION value="1">1</OPTION>
+                        <OPTION value="2">2</OPTION>
+                        <OPTION value="3">3</OPTION>
+                    </select>
+                </td>
+                <td> > </td>
+                <td><input id="bookmark_folder" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><button class="btn" id="save">save</button></td>
+            </tr>
+        </table>
+        </div>
     </div>
-    <script type="text/javascript" src="js/myscript.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/func.js"></script>
 </body>
 </html>
