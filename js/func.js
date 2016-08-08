@@ -80,7 +80,17 @@ document.getElementById("store").onclick = function() {
     });
 };
 
-document.getElementById("retreve").onclick = function() {
+document.getElementById("retrieve").onclick = function() {
+    var stored_urls = JSON.parse(localStorage.getItem(store_key));
+    localStorage.removeItem(store_key);
+    chrome.windows.create({
+        "url": stored_urls,
+        "focused": true,
+        "type":    "normal",
+    }, function(){
+        window.close();
+    }
+    );
 };
 
 //-------------------------------------------------------------
