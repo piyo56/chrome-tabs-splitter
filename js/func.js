@@ -123,15 +123,15 @@ document.getElementById("bookmark").onclick = function() {
             grand_children = children[i]["children"];
             if (index === "") {
             //1回目
-                new_index = String(i);
-                target_div.appendChild(createOption(new_index, children[i]["title"]));
+                new_index = children[i]["id"];
+                target_div.appendChild(createOption(children[i]["id"], children[i]["title"]));
                 //console.info(children[i]["title"]);
                 callback(children[i], new_index, callback);
             }else if (typeof(grand_children) !== "undefined") {
             //その他
-                new_index = index + "|" + String(i);
+                new_index = index + "|" + children[i]["id"];
                 //console.info(indent, children[i]["title"]);
-                target_div.appendChild(createOption(new_index, indent+children[i]["title"]));
+                target_div.appendChild(createOption(children[i]["id"], indent+children[i]["title"]));
                 callback(children[i], new_index, callback);
             }
         }
@@ -144,33 +144,40 @@ document.getElementById("bookmark").onclick = function() {
     });
 };
 
-    /*
-    var applyToChildren = function(node, index, callback){
-        for (var i=0; i<node.length; i++) {
-            var new_index = index + "|" + i;
-            //target_div.appendChild(createOption(new_index, children[i]["title"]));
-            var children = node[i]["children"];
-            if (typeof(children) !== "undefined" && children.length !== 0) {
-                console.info(node[i]["title"]);
-                var next_children = children[i]["children"];
-                console.info(typeof(next_children));
-                if (typeof(next_children) !== "undefined" && next_children.length !== 0) {
-                    callback(children, new_index, callback);
-                }
-            }
-        }
-    };
-    //main
-    chrome.bookmarks.getTree(function(bookmark_tree) {
-        var bookmark_tree = bookmark_tree[0]["children"];
-        for(var i=0; i<bookmark_tree.length; i++) {
-            //target_div.appendChild(createOption(i, bookmark_tree[i]["title"]));
-            console.info(bookmark_tree[i]["title"]);
-            var children = bookmark_tree[i]["children"];
-            if (typeof(children) !== "undefined" && children.length !== 0) {
-                applyToChildren(children, i, applyToChildren);
-            }
-        }
-    });
-    */
+document.getElementById("save").onclick = function() {
+    var parent_id = document.getElementById("bookmark_folder").value;
+    var new_folder_name = document.getElementById("new_folder_name").value;
 
+    if(new_folder_name !== "") {
+        //フォルダを作成
+        chrome.bookmarks.create({
+                "parentId": parent_id,
+                "title":    new_folder_name,
+                "url":      null,
+            }, function(result) {
+                //現在のウィンドウの全てのページをブックマーク
+                chrome.tabs.query({"currentWindow": true}, function(tabs){
+                    for (var i=0; i<tabs.length; i++) {
+                        chrome.bookmarks.create({
+                            "parentId": result["id"],
+                            "title":    tabs[i]["title"],
+                            "url":      tabs[i]["url"],
+                        });
+                    }
+                });
+            }
+        );
+    } else {
+        //現在のウィンドウの全てのページをブックマーク
+        chrome.tabs.query({"currentWindow": true}, function(tabs){
+            for (var i=0; i<tabs.length; i++) {
+                chrome.bookmarks.create({
+                    "parentId": parent_id,
+                    "title":    tabs[i]["title"],
+                    "url":      tabs[i]["url"],
+                });
+            }
+        });
+    }
+
+};
