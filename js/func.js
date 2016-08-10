@@ -162,6 +162,12 @@ document.getElementById("save").onclick = function() {
                             "parentId": result["id"],
                             "title":    tabs[i]["title"],
                             "url":      tabs[i]["url"],
+                        }, function(){
+                            // chrome.tabs.remove(tabs[i]["id"]のようには
+                            // 非同期処理の関係でできない模様。難しい。
+                            for (var j=0; j<tabs.length; j++) {
+                                chrome.tabs.remove(tabs[j]["id"]);
+                            }
                         });
                     }
                 });
