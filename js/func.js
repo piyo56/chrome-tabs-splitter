@@ -1,19 +1,5 @@
 var store_key = "temporarily_stored_tabs";
 
-function openInNewWindow( init_tabId, append_tabIds ) {
-    //var prev_window_id
-    //chrome.windows.getLastFocused(function(current_window) {
-    var size = getHalfDisplaySize();
-    chrome.windows.create({
-            "tabId":   init_tabId,
-            "focused": true,
-            "type":    "normal",
-        }, function(window_info) {
-            chrome.tabs.move(append_tabIds, {"windowId":window_info["id"], "index":-1});
-        }
-    );
-}
-
 /* not use yet */
 function getHalfDisplaySize() {
     return {
@@ -33,9 +19,7 @@ document.getElementById("split").onclick = function() {
             left_tabIds  = [],
             right_tabIds = [];
 
-        //[タブのsplit処理]
-        //  現在の開いている(=active)タブを含め、その右側
-        //  にあるタブをまとめて、新しいウィンドウで開く
+        //  
         for (var i=0; i<tabArray.length; i++) {
             var tabId = tabArray[i]["id"]
             if( tabArray[i]["active"] ){
@@ -50,16 +34,26 @@ document.getElementById("split").onclick = function() {
         console.info("now: " + active_tabId);
         console.info("left: " + left_tabIds);
         console.info("right: " + right_tabIds);
-        openInNewWindow( active_tabId, right_tabIds );
+        
+        // open right_tabs in a new window
+        chrome.windows.create({
+                "tabId":   active_tabId,
+                "focused": true,
+                "type":    "normal"
+            }, function(window_info) {
+                chrome.tabs.move(right_tabIds, {"windowId":window_info["id"], "index":-1});
+            }
+        );
     });
 };
 
 
 //-------------------------------------------------------------
 //  store機能
-//  [説明] : 一時的にWebStorageを使ってデバイスにタブを保存
-//  
-//  [TO DO]: storeしたタブが後々不要になった時に削除する機能
+//  [説明] : 一時的にWebStorageを使ってデバイスにタブのurlを保存
+//
+//  [TO DO]: - 今のところ保存できるタブは一回分のみ 改良の検討
+//           - storeしたタブを削除する機能
 //-------------------------------------------------------------
 document.getElementById("store").onclick = function() {
     chrome.tabs.query({"currentWindow": true}, function(all_tabs) {
@@ -100,25 +94,83 @@ document.getElementById("retrieve").onclick = function() {
 document.getElementById("bookmark").onclick = function() {
     document.body.style.height = "300px";
     document.getElementById("bookmark_setting").style.display = "block";
-    chrome.bookmarks.getTree(function(bookmark_tree) {
-        console.info(bookmark_tree);
-    });
 
+    var target_div = document.getElementById("bookmark_folder");
+
+    var createOption = function(val, str){
+        var new_option = document.createElement("option");
+        new_option.value = val;
+        new_option.innerHTML = str;
+        return new_option;
+    };
+    
+    
+    var getAllDir = function(node, index, callback) {
+        var children = node["children"];
+        var grand_children;
+        var new_index;
+
+        //ノードのレベル
+        var indent="";
+        for( var j=0; j<index.split("|").length; j++) {
+            indent += "&nbsp;&nbsp;";
+        }
+        
+        // 子ノードに対し:
+        //     一回目であれば全表示
+        //     その他の場合は子ノードがディレクトリであれば表示
+        for (var i=0; i<children.length; i++) {
+            grand_children = children[i]["children"];
+            if (index === "") {
+            //1回目
+                new_index = String(i);
+                target_div.appendChild(createOption(new_index, children[i]["title"]));
+                //console.info(children[i]["title"]);
+                callback(children[i], new_index, callback);
+            }else if (typeof(grand_children) !== "undefined") {
+            //その他
+                new_index = index + "|" + String(i);
+                //console.info(indent, children[i]["title"]);
+                target_div.appendChild(createOption(new_index, indent+children[i]["title"]));
+                callback(children[i], new_index, callback);
+            }
+        }
+    };
+
+    //main
+    chrome.bookmarks.getTree(function(bookmark_tree) {
+        console.info(bookmark_tree[0]);
+        getAllDir(bookmark_tree[0], "", getAllDir);
+    });
 };
 
-/*
-function getBookmarkDir(bookmark_tree){
-    var bookmark_info = ["];
-    for (var i=0; i<bookmark_tree.length; i++) {
-        
-}
-*/
-/*
-   chrome.windows.create({
-   "width":   300,
-   "height":  300,
-   "focused": true,
-   "type":    "popup"
-   }, function (window_info){
-   });
-*/
+    /*
+    var applyToChildren = function(node, index, callback){
+        for (var i=0; i<node.length; i++) {
+            var new_index = index + "|" + i;
+            //target_div.appendChild(createOption(new_index, children[i]["title"]));
+            var children = node[i]["children"];
+            if (typeof(children) !== "undefined" && children.length !== 0) {
+                console.info(node[i]["title"]);
+                var next_children = children[i]["children"];
+                console.info(typeof(next_children));
+                if (typeof(next_children) !== "undefined" && next_children.length !== 0) {
+                    callback(children, new_index, callback);
+                }
+            }
+        }
+    };
+    //main
+    chrome.bookmarks.getTree(function(bookmark_tree) {
+        var bookmark_tree = bookmark_tree[0]["children"];
+        for(var i=0; i<bookmark_tree.length; i++) {
+            //target_div.appendChild(createOption(i, bookmark_tree[i]["title"]));
+            console.info(bookmark_tree[i]["title"]);
+            var children = bookmark_tree[i]["children"];
+            if (typeof(children) !== "undefined" && children.length !== 0) {
+                applyToChildren(children, i, applyToChildren);
+            }
+        }
+    });
+    */
+
