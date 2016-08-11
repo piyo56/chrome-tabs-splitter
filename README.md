@@ -1,5 +1,4 @@
-tabs_splitter
---
+# tabs_splitter
 
 タブ操作を少し便利にしたいChrome拡張機能
 
