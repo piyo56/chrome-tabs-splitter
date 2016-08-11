@@ -10,7 +10,7 @@
     ],
 
     "browser_action": {
-        "default_icon": "images/icon19.png",
+        "default_icon": "images/icon1.png",
         "default_title": "tab_tmp",
         "default_popup": "popup.html"
     }
