@@ -93,7 +93,7 @@ document.getElementById("retrieve").onclick = function() {
 //-------------------------------------------------------------
 document.getElementById("bookmark").onclick = function() {
     document.body.style.height = "300px";
-    document.getElementById("bookmark_setting").style.display = "block";
+    document.getElementById("options").style.display = "block";
 
     var target_div = document.getElementById("bookmark_folder");
 

@@ -1,10 +1,8 @@
 window.onload = function() {
-    var store_div      = document.getElementById("li_store");
     var store_button   = document.getElementById("store");
     var retrieve_button = document.getElementById("retrieve");
     
     if (!localStorage) {
-        store_div.style.display      = "none";
         store_button.style.display   = "none";
         retrieve_button.style.display = "none";
         return;
