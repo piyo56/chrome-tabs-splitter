@@ -46,8 +46,10 @@ main {
     border: 1px solid #DDD;
     border-radius: 4px;
     color: #111;
-    width: auto;
     padding: 7px 5px;
+    width: auto;
+    height: 35px;
+    box-sizing: border-box;
     font-size: 11pt;
     letter-spacing: 1px;
 }
@@ -62,18 +64,39 @@ main {
 
 #options {
     display: none;
-    height: auto;
-    padding: 0;
+    height: 100px;
+    padding-top: 15px;
     margin: 0;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255,255,255,0.2);
 }
 
+#options ul {
+    margin: 0;
+    padding: 0;
+}
 #options li {
     display: inline-block;
     list-style-type: none;
 }
 
+#bookmark_tree{
+    width: 150px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+#options p {
+    width: 30px;
+}
+
+#new_folder_name {
+    width: 120px;
+    padding: 0px 5px;
+}
+
 #save {
-    margin: 0;
+    margin-left: 190px;
     padding: 0;
     height: 25px;
     width: 40px;
