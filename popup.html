@@ -1,102 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <style>
-        html {
-        }
-        body {
-            width: 350px;
-            height: 150px;
-        }
-        #header p {
-            width: 80%;
-            height: 20%;
-            table-layout: fixed;
-            font-size: 18pt;
-            font-weight: bold;
-            padding: 5px 10px;
-            margin: 0 auto;
-            border: solid 1px;
-            text-align: center;
-        }
-        #container {
-            height: 80%;
-        }
-        #container > ul {
-            height: 40%;
-        }
-        #container > li {
-            margin: 5px auto;
-        }
-        #container button {
-            text-align: center;
-            margin: 5px auto;
-        }
-        .btn{
-            font-size: 11pt;
-        }
-        #bookmark_setting {
-            width: 90%;
-            height: 50%;
-            margin: 0 auto;
-            text-align:center;
-            display: none;
-            font-size: 11pt;
-            border: groove 1px;
-        }
-        #bookmark_setting > table {
-            width: 80%;
-            margin: 0 auto;
-            text-align: center;
-        }
-        #bookmark_setting select {
-            max-width: 150px;
-        }
-        #bookmark_setting input {
-            max-width: 150px;
-            text-align: center;
-        }
-    </style>
+    <meta charset="utf8">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="default.css">
 </head>
 <body>
-    <div id="header">
-        <p>tabs_splitter</p>
-    </div>
-    <div id="container">
-        <ul>
-            <li>
-                <button class="btn" id="split">split</button>
-            </li>
-            <li id="li_store">
-                <button class="btn" id="store">store</button>
-                <button class="btn" id="retrieve">retrieve</button>
-            </li>
-            <li>
-                <button class="btn" id="bookmark">bookmark</button>
-            </li>
-        </ul>
-
-        <div id="bookmark_setting">
-        <p>Bookmark path</p>
-        <table>
-            <tr>
-                <td>
-                    <select id="bookmark_folder">
-                    </select>
-                </td>
-                <td> > </td>
-                <td><input id="new_folder_name" type="text"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td><button class="btn" id="save">save</button></td>
-            </tr>
-        </table>
+    <header>
+        <div class="container">
+            <h2>tabs_splitter</h2>
         </div>
-    </div>
-    <script type="text/javascript" src="js/init.js"></script>
-    <script type="text/javascript" src="js/func.js"></script>
+    </header>
+    <main>
+        <div class="container">
+            <div id="func_buttons">
+                <button>split</button>
+                <button>store</button>
+                <button>bookmark</button>
+            </div>
+            <div id="options">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div id="author">
+                <div class="img">
+                    <a href="http://hoodie.tokyo" target="_blank"><img src="images/vr.png" width="30" height="30"></a>
+                </div>
+                <div class="text">made by </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

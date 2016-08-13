@@ -1,0 +1,81 @@
+html {
+}
+
+body {
+    width: 400px;
+    height: 250px;
+}
+
+.container {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+header{
+    height: 50px;
+    background: tomato;
+    line-height: 50px;
+}
+
+main {
+    height: 150px;
+    background: skyblue;
+}
+
+#func_buttons {
+    height: 50px;
+    background: limegreen;
+    padding-top: 15px;
+    margin: 0;
+}
+
+#func_buttons > button {
+    background: #EEE;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    color: #111;
+    width: auto;
+    padding: 5px 5px;
+    font-size: 14px;
+}
+
+#func_buttons > button:hover {
+    opacity: 0.8;
+}
+
+#func_buttons > button:not(:last-child) {
+    margin-right: 30px;
+}
+
+#options {
+    height: 100px;
+    background: lightgreen;
+}
+
+footer{
+    height: 50px;
+    background: gray;
+    line-height: 50px;
+}
+
+#author {
+    padding-top: 10px;
+}
+.text {
+    float: right;
+    padding-right: 10px;
+    font-size: 10pt;
+    font-style: italic;
+}
+
+.img {
+    float: right;
+    padding-top: 5px;
+    padding-right: 10px;
+    margin:0;
+}
+.img > a {
+    width: 0;
+    height: 0;
+}
