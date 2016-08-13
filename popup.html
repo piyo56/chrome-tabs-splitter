@@ -8,17 +8,30 @@
 <body>
     <header>
         <div class="container">
-            <h2>tabs_splitter</h2>
+            <h3>tabs_splitter</h3>
         </div>
     </header>
     <main>
         <div class="container">
             <div id="func_buttons">
-                <button>split</button>
-                <button>store</button>
-                <button>bookmark</button>
+                <button class="btn">split</button>
+                <button class="btn">store</button>
+                <button class="btn">bookmark</button>
             </div>
             <div id="options">
+                <ul>
+                    <li>
+                        <select id="bookmark_folder">
+                        </select>
+                    </li>
+                    <li>
+                        <p> > </p>
+                    </li>
+                    <li>
+                        <input id="new_folder_name" type="text">
+                    </li>
+                </ul>
+                <button class="btn" id="save">save</button>
             </div>
         </div>
     </main>
