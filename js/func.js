@@ -1,17 +1,11 @@
 var store_key = "temporarily_stored_tabs";
 
-/* not use yet */
-function getHalfDisplaySize() {
-    return {
-        "width":  Math.floor(window.parent.screen.width / 2),
-        "height": window.parent.screen.height
-    };
-}
-
 //-------------------------------------------------------------
 //  split機能
 //  [説明] : 今開いているタブを基準に右側のタブを新しいウィン
 //           ドウで開く
+//  [TODO] : 開いたばかりのタブ（あるいはロード中のタブ）に対して
+//           実行するとうまくいかない。原因がよくわからない。
 //-------------------------------------------------------------
 document.getElementById("split").onclick = function() {
     chrome.tabs.query( {currentWindow: true}, function(tabArray){
@@ -19,7 +13,6 @@ document.getElementById("split").onclick = function() {
             left_tabIds  = [],
             right_tabIds = [];
 
-        //  
         for (var i=0; i<tabArray.length; i++) {
             var tabId = tabArray[i]["id"]
             if( tabArray[i]["active"] ){
@@ -30,10 +23,6 @@ document.getElementById("split").onclick = function() {
                 right_tabIds.push(tabId);
             }
         }
-        console.info(tabArray);
-        console.info("now: " + active_tabId);
-        console.info("left: " + left_tabIds);
-        console.info("right: " + right_tabIds);
         
         // open right_tabs in a new window
         chrome.windows.create({
@@ -92,10 +81,9 @@ document.getElementById("retrieve").onclick = function() {
 //  [説明] : 今開いている全てのタブをまとめてブックマークする
 //-------------------------------------------------------------
 document.getElementById("bookmark").onclick = function() {
-    document.body.style.height = "300px";
     document.getElementById("options").style.display = "block";
 
-    var target_div = document.getElementById("bookmark_folder");
+    var target_div = document.getElementById("bookmark_tree");
 
     var createOption = function(val, str){
         var new_option = document.createElement("option");
@@ -145,7 +133,7 @@ document.getElementById("bookmark").onclick = function() {
 };
 
 document.getElementById("save").onclick = function() {
-    var parent_id = document.getElementById("bookmark_folder").value;
+    var parent_id = document.getElementById("bookmark_tree").value;
     var new_folder_name = document.getElementById("new_folder_name").value;
 
     if(new_folder_name !== "") {
@@ -178,9 +166,15 @@ document.getElementById("save").onclick = function() {
         chrome.tabs.query({"currentWindow": true}, function(tabs){
             for (var i=0; i<tabs.length; i++) {
                 chrome.bookmarks.create({
-                    "parentId": parent_id,
+                    "parentId": parent["id"],
                     "title":    tabs[i]["title"],
                     "url":      tabs[i]["url"],
+                }, function(){
+                    // chrome.tabs.remove(tabs[i]["id"]のようには
+                    // 非同期処理の関係でできない模様。難しい。
+                    for (var j=0; j<tabs.length; j++) {
+                        chrome.tabs.remove(tabs[j]["id"]);
+                    }
                 });
             }
         });
