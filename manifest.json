@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
 
-    "name": "tab_tmp",
-    "version": "0.1",
+    "name": "tabs_splitter",
+    "version": "0.2",
     "description": "タブ操作をちょっと便利にしたいエクステンション！",
 
     "permissions": [
@@ -11,7 +11,7 @@
 
     "browser_action": {
         "default_icon": "images/icon1.png",
-        "default_title": "tab_tmp",
+        "default_title": "tabs_splitter",
         "default_popup": "popup.html"
     }
 }
