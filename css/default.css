@@ -1,6 +1,8 @@
 html {
 }
-
+textarea{
+    outline: none;
+}
 body {
     width: 400px;
     box-sizing: border-box;
@@ -35,15 +37,35 @@ main {
 }
 
 #func_buttons {
-    margin: 0;
     height: 50px;
+    width: 275px;
+    margin: 0 auto;
     padding-top: 15px;
-    margin: 0;
+}
+#split{
+    width: 45px;
+    box-sizing: border-box;
+    float:left;
+}
+#store{
+    width: 55px;
+    box-sizing: border-box;
+    float:left;
+}
+#retrieve{
+    width: 95px;
+    box-sizing: border-box;
+    float:left;
+}
+#bookmark{
+    width: 95px;
+    box-sizing: border-box;
+    float:left;
 }
 
 .btn {
-    background: #EEE;
-    border: 1px solid #DDD;
+    background: #eee;
+    border: 1px solid #ddd;
     border-radius: 4px;
     color: #111;
     padding: 7px 5px;
@@ -52,10 +74,21 @@ main {
     box-sizing: border-box;
     font-size: 11pt;
     letter-spacing: 1px;
+    box-shadow: 0px 4px rgba(0,0,0,.4);
+    cursor: pointer;
 }
 
-#func_buttons > button:hover {
-    opacity: 0.7;
+.btn:not(:last-child){
+    margin-right: 40px;
+}
+
+.pushed{
+    margin-top: 3px;
+    box-shadow: 0px 1px rgba(0,0,0,.4);
+}
+
+.btn:hover {
+    opacity: 0.8;
 }
 
 #func_buttons > button:not(:last-child) {
