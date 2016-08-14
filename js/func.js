@@ -136,6 +136,10 @@ document.getElementById("save").onclick = function() {
     var parent_id = document.getElementById("bookmark_tree").value;
     var new_folder_name = document.getElementById("new_folder_name").value;
 
+    if(parent_id = "") {
+        return;
+    }
+
     if(new_folder_name !== "") {
         //フォルダを作成
         chrome.bookmarks.create({
