@@ -136,17 +136,35 @@ document.getElementById("save").onclick = function() {
     var parent_id = document.getElementById("bookmark_tree").value;
     var new_folder_name = document.getElementById("new_folder_name").value;
 
-    if(parent_id = "") {
+    if(parent_id === "") {
         return;
     }
-
-    if(new_folder_name !== "") {
+    
+    //新しくファイルを作る場合は作ってからその中にブックマークする
+    //ない場合はファイル作成せずにそのままいれる
+    if(new_folder_name === "") {
+        //現在のウィンドウの全てのページをブックマーク
+        chrome.tabs.query({"currentWindow": true}, function(tabs){
+            for (var i=0; i<tabs.length; i++) {
+                chrome.bookmarks.create({
+                    "parentId": parent_id,
+                    "title":    tabs[i]["title"],
+                    "url":      tabs[i]["url"],
+                }, function(){
+                    // chrome.tabs.remove(tabs[i]["id"]のようには
+                    // 非同期処理の関係でできない模様。難しい。
+                    for (var j=0; j<tabs.length; j++) {
+                        chrome.tabs.remove(tabs[j]["id"]);
+                    }
+                });
+            }
+        });
+    } else {
         //フォルダを作成
         chrome.bookmarks.create({
                 "parentId": parent_id,
                 "title":    new_folder_name,
-                "url":      null,
-            }, function(result) {
+            }, function(result) { //原因
                 //現在のウィンドウの全てのページをブックマーク
                 chrome.tabs.query({"currentWindow": true}, function(tabs){
                     for (var i=0; i<tabs.length; i++) {
@@ -165,23 +183,5 @@ document.getElementById("save").onclick = function() {
                 });
             }
         );
-    } else {
-        //現在のウィンドウの全てのページをブックマーク
-        chrome.tabs.query({"currentWindow": true}, function(tabs){
-            for (var i=0; i<tabs.length; i++) {
-                chrome.bookmarks.create({
-                    "parentId": parent["id"],
-                    "title":    tabs[i]["title"],
-                    "url":      tabs[i]["url"],
-                }, function(){
-                    // chrome.tabs.remove(tabs[i]["id"]のようには
-                    // 非同期処理の関係でできない模様。難しい。
-                    for (var j=0; j<tabs.length; j++) {
-                        chrome.tabs.remove(tabs[j]["id"]);
-                    }
-                });
-            }
-        });
     }
-
 };
