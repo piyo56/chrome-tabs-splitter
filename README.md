@@ -2,6 +2,8 @@
 
 タブ操作を少し便利にしたいChrome拡張機能
 
+![ScreenShot](images/ss.png)
+
 問題点
 --
 
